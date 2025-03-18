@@ -1,0 +1,69 @@
+name: JMeter Test Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test Jmeter Fakestoreapi
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Obtener el código del repositorio
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      # Paso 2: Configurar JDK - Java
+      - name: Configurar JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Paso 3: Descargar e instalar JMeter
+      - name: Descargar e instalar JMeter
+        run: |
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk wget
+          wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz               
+          tar -xvzf apache-jmeter-5.6.3.tgz
+          sudo mv apache-jmeter-5.6.3 /opt/jmeter
+          export PATH=$PATH:/opt/jmeter/bin
+          echo "JMeter instalado"
+
+      # Paso 4: Ejecutar las pruebas de carga en JMeter
+      - name: Correr JMeter Test Concurrency
+        run: |
+          # Ejecutar el plan de pruebas JMeter (.jmx)
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Concurrency.jmx -l ./tests/Concurrency.jtl -e -o ./tests/reportConcurrency
+
+      - name: Correr JMeter Test Load Stress
+        run: |
+          # Ejecutar el plan de pruebas JMeter (.jmx)
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario1.jmx -l ./tests/Load-Stress_Escenario1.jtl -e -o ./tests/reportLoadStress
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario2.jmx -l ./tests/Load-Stress_Escenario2.jtl -e -o ./tests/reportLoadStress
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario3.jmx -l ./tests/Load-Stress_Escenario3.jtl -e -o ./tests/reportLoadStress
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario4.jmx -l ./tests/Load-Stress_Escenario4.jtl -e -o ./tests/reportLoadStress
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario5.jmx -l ./tests/Load-Stress_Escenario5.jtl -e -o ./tests/reportLoadStress
+
+      # Paso 5: Publicar los resultados de las pruebas en GitHub Actions
+      - name: Publicar los resultados de las pruebas en GitHub Actions
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-results-jtl
+          path: ./tests/**/*.jtl     
+
+      - name: Subir informe HTML de JMeter de reporte Concurrency 
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-reportConcurrency
+          path: ./tests/reportConcurrency
+          
+      - name: Subir informe HTML de JMeter de reporte Stress
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-reportLoadStressHTML
+          path: ./tests/reportLoadStressHTML 

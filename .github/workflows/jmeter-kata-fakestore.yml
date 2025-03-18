@@ -43,11 +43,11 @@ jobs:
       - name: Correr JMeter Test Load Stress
         run: |
           # Ejecutar el plan de pruebas JMeter (.jmx)
-          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario1.jmx -l ./tests/Load-Stress_Escenario1.jtl -e -o ./tests/reportLoadStress
-          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario2.jmx -l ./tests/Load-Stress_Escenario2.jtl -e -o ./tests/reportLoadStress
-          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario3.jmx -l ./tests/Load-Stress_Escenario3.jtl -e -o ./tests/reportLoadStress
-          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario4.jmx -l ./tests/Load-Stress_Escenario4.jtl -e -o ./tests/reportLoadStress
-          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario5.jmx -l ./tests/Load-Stress_Escenario5.jtl -e -o ./tests/reportLoadStress
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario1.jmx -l ./tests/Load-Stress_Escenario1.jtl -e -o ./tests/reportLoadStressEscenario1
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario2.jmx -l ./tests/Load-Stress_Escenario2.jtl -e -o ./tests/reportLoadStressEscenario2
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario3.jmx -l ./tests/Load-Stress_Escenario3.jtl -e -o ./tests/reportLoadStressEscenario3
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario4.jmx -l ./tests/Load-Stress_Escenario4.jtl -e -o ./tests/reportLoadStressEscenario4
+          /opt/jmeter/bin/jmeter -n -t ./tests/KataFakestoreApi_Load-Stress_Escenario5.jmx -l ./tests/Load-Stress_Escenario5.jtl -e -o ./tests/reportLoadStressEscenario5
 
       # Paso 5: Publicar los resultados de las pruebas en GitHub Actions
       - name: Publicar los resultados de las pruebas en GitHub Actions
@@ -62,8 +62,32 @@ jobs:
           name: jmeter-reportConcurrency
           path: ./tests/reportConcurrency
           
-      - name: Subir informe HTML de JMeter de reporte Stress
+      - name: Subir informe HTML de JMeter de reporte LoadStress Escenario1
         uses: actions/upload-artifact@v4
         with:
-          name: jmeter-reportLoadStressHTML
-          path: ./tests/reportLoadStressHTML 
+          name: jmeter-html-reportLoadStressEscenario1
+          path: ./tests/reportLoadStressEscenario1
+      
+       - name: Subir informe HTML de JMeter de reporte LoadStress Escenario2
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-html-reportLoadStressEscenario2
+          path: ./tests/reportLoadStressEscenario2 
+      
+       - name: Subir informe HTML de JMeter de reporte LoadStress Escenario3
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-html-reportLoadStressEscenario3
+          path: ./tests/reportLoadStressEscenario3 
+
+       - name: Subir informe HTML de JMeter de reporte LoadStress Escenario4
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-html-reportLoadStressEscenario4
+          path: ./tests/reportLoadStressEscenario4
+
+       - name: Subir informe HTML de JMeter de reporte LoadStress Escenario5
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-html-reportLoadStressEscenario5
+          path: ./tests/reportLoadStressEscenario5 

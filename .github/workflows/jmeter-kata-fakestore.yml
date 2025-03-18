@@ -68,25 +68,25 @@ jobs:
           name: jmeter-html-reportLoadStressEscenario1
           path: ./tests/reportLoadStressEscenario1
       
-       - name: Subir informe HTML de JMeter de reporte LoadStress Escenario2
+      - name: Subir informe HTML de JMeter de reporte LoadStress Escenario2
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-html-reportLoadStressEscenario2
           path: ./tests/reportLoadStressEscenario2 
       
-       - name: Subir informe HTML de JMeter de reporte LoadStress Escenario3
+      - name: Subir informe HTML de JMeter de reporte LoadStress Escenario3
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-html-reportLoadStressEscenario3
           path: ./tests/reportLoadStressEscenario3 
 
-       - name: Subir informe HTML de JMeter de reporte LoadStress Escenario4
+      - name: Subir informe HTML de JMeter de reporte LoadStress Escenario4
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-html-reportLoadStressEscenario4
           path: ./tests/reportLoadStressEscenario4
 
-       - name: Subir informe HTML de JMeter de reporte LoadStress Escenario5
+      - name: Subir informe HTML de JMeter de reporte LoadStress Escenario5
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-html-reportLoadStressEscenario5
